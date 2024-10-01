@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/frontend/styles/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <title>SomeStore</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="navbar">
+        <h1 class="logo">Some<span>Store</span></h1>
+        <ul class="navigation">
+          <li><a href="#" class="nav-link">Products</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="#" class="nav-link">Saved</a></li>
+          <li><a href="#" class="nav-link">Cart</a></li>
+        </ul>
+      </div>
+      <swiper-container
+        class="mySwiper"
+        pagination="true"
+        pagination-clickable="true"
+        navigation="true"
+        space-between="30"
+        centered-slides="true"
+        autoplay-delay="5000"
+        autoplay-disable-on-interaction="false"
+      >
+        <swiper-slide>
+          <div class="apple-watch apple">
+            <h1 class="slide-box">Apple Watch Ultra</h1>
+            <span class="slide-desc">The <span>best</span> performance for <span>you</span>. <br> Experience better display, better battery life and performance</span>
+          </div>
+        </swiper-slide>
+        <swiper-slide class="apple-iphone apple">
+          <h1 class="slide-box">Iphone 16 Pro <span>Max</span></h1>
+          <span class="slide-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. <br> Nisi tenetur molestias impedit hic tempore voluptatibus enim illum <br> earum neque consequatur.</span>
+        </swiper-slide>
+      </swiper-container>
+      <div class="contact" id="contact">
+        <div class="left">
+          <h1>Contact with us</h1>
+          <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, dolore quaerat libero in ipsa suscipit, soluta veritatis id architecto maxime voluptatum tenetur, dolorem ad fugit odio fugiat facere reprehenderit?</span>
+        </div>
+        <div class="right">
+          <form class="contact-form">
+            <h1>Leave your information</h1>
+            <div class="fields">
+              <div class="name input">
+                <label for="name">Your Name:</label>
+                <input type="text" name="name" id="name" required placeholder="Your Name here">
+              </div>
+              <div class="surname input">
+                <label for="surname">Your Surname:</label>
+                <input type="text" name="surname" id="surname" placeholder="Your Surname here">
+              </div>
+              <div class="phone-number input">
+                <label for="number">Your Phone Number:</label>
+                <input type="tel" id="number" maxlength="19" placeholder="Your Phone Number Here" required value="+998 " name="number">
+              </div>
+              <div class="txtarea input">
+                <label for="txtarea">Leave Message:</label>
+                <textarea name="txtarea" id="txtarea" cols="30" rows="10" maxlength="200" placeholder="Upto 200 characters*"></textarea>
+              </div>
+              <input type="submit" value="Submit">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/frontend/logic/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+  </body>
+</html>
