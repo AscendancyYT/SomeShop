@@ -96,7 +96,7 @@ swiper-slide img {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/frontend/styles/images/apple-watch.jpg');
+  background-image: url('/styles/images/apple-watch.jpg');
   background-size: 100%;
   position: relative;
 }
@@ -106,7 +106,7 @@ swiper-slide img {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/frontend/styles/images/apple-iphone.webp');
+  background-image: url('/styles/images/apple-iphone.webp');
   background-size: 100%;
   position: relative;
 }
@@ -116,7 +116,7 @@ swiper-slide img {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/frontend/styles/images/apple-airpods.jpeg');
+  background-image: url('/styles/images/apple-airpods.jpeg');
   background-size: 100%;
   background-repeat: no-repeat;
   position: relative;
