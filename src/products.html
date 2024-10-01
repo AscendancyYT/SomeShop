@@ -1,16 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles/products.css">
-  <title>Some Store | Products</title>
-</head>
-<body>
-  <h1 class="name">Name: </h1>
-  <h1 class="cost">Cost: </h1>
-  <script src="/logic/products.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/products.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Bentham|Playfair+Display|Raleway:400,500|Suranna|Trocchi"
+      rel="stylesheet"
+    />
+    <title>Some Store | Products</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="navbar">
+        <h1 class="logo">Some<span>Store</span></h1>
+        <ul class="navigation">
+          <li><a href="/index.html" class="nav-link">Home</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="#" class="nav-link">Saved</a></li>
+          <li><a href="#" class="nav-link">Cart</a></li>
+        </ul>
+      </div>
+      <div class="products">
+        <h1 class="box">Check out our products</h1>
+        <div class="product"></div>
+      </div>
+    </div>
+    <script src="/logic/products.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      let productContainer = document.querySelector(".product"); // Adjust selector if needed
+      axios
+        .get("http://localhost:5000/Products")
+        .then((response) => {
+          const products = response.data; // assuming the response is an array of products
+
+          // Map over the products and create HTML elements for each product
+          const productCards = products.map((product) => {
+            // Create a new div for the product card
+            let productCard = document.createElement("div");
+            productCard.classList.add("product-card"); // Add a class for styling the card
+
+            // Create and populate the HTML for the product card
+            productCard.innerHTML += `<h3 class="product-name">${product.name}</h3> \n<p class="product-id">ID: ${product.id}</p> \n<p class="product-cost">Cost: $${product.cost}</p> \n`;
+
+            return productCard; // Return the product card element
+          });
+
+          // Append all product cards to the container
+          productCards.forEach((card) => productContainer.appendChild(card));
+        })
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+        });
+    </script>
+  </body>
 </html>

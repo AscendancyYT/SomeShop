@@ -7,9 +7,6 @@
   outline: none;
   transition: all .2s linear;
 }
-body{
-  transition: all .2s linear;
-}
 .container {
   width: 100vw;
   height: 100vh;
@@ -34,12 +31,6 @@ body{
   justify-content: center;
   z-index: 999;
   transition: all .2s linear;
-}
-.hidden {
-  display: none;
-  transition: all .2s linear;
-  position: absolute;
-  top: -50%;
 }
 .container .navbar .logo {
   width: 50%;
