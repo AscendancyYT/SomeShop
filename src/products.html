@@ -35,16 +35,13 @@
         .get("http://localhost:5000/Products")
         .then((response) => {
           const products = response.data; // assuming the response is an array of products
-
-          // Map over the products and create HTML elements for each product
           const productCards = products.map((product) => {
             let productCard = document.createElement("div");
             productCard.classList.add("product-card"); // Add a class for styling the card
-            productCard.innerHTML += `<h3 class="product-name">${product.name}</h3> \n<p class="product-id">ID: ${product.id}</p> \n<p class="product-cost">Cost: $${product.cost}</p> \n`;
+            productCard.innerHTML += `<h3 class="product-name">${product.name}</h3> \n<p class="product-id">ID: ${product.id}</p> \n<p class="product-cost">Cost: $${product.cost}</p> \n <button class="addToCart">Add to Card</button> \n <button class="save">Save</button> \n`;
 
             return productCard; // Return the product card element
           });
-          // Append all product cards to the container
           productCards.forEach((card) => productContainer.appendChild(card));
         })
         .catch((error) => {
