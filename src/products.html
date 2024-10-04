@@ -25,12 +25,23 @@
       <div class="products">
         <h1 class="box">Check out our products</h1>
         <div class="product"></div>
-      </div>  
+      </div>
+      <div class="alert">
+        <div class="success_message">
+          <h1 class="success_message_title">Successfull operation</h1>
+          <h2 class="success_message_subtitle">Product was successfully added to your cart</h2>
+        </div>
+        <div class="btns">
+          <button class="continue">Continue</button>
+          <a href="/src/cart.html">To Cart</a>
+        </div>
+      </div>
     </div>
     <script src="/logic/products.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       let productContainer = document.querySelector(".product"); // Adjust selector if needed
+
       axios
         .get("http://localhost:5000/Products")
         .then((response) => {
@@ -38,15 +49,62 @@
           const productCards = products.map((product) => {
             let productCard = document.createElement("div");
             productCard.classList.add("product-card"); // Add a class for styling the card
-            productCard.innerHTML += `<h3 class="product-name">${product.name}</h3> \n<p class="product-id">ID: ${product.id}</p> \n<p class="product-cost">Cost: $${product.cost}</p> \n <button class="addToCart">Add to Card</button> \n <button class="save">Save</button> \n`;
+            productCard.innerHTML = `
+        <h3 class="product-name">${product.name}</h3>
+        <p class="product-id">ID: ${product.id}</p>
+        <p class="product-cost">Cost: $${product.cost}</p>
+        <button class="addToCart">Add to Cart</button>
+      `;
 
-            return productCard; // Return the product card element
+            // Return the product card element
+            return productCard;
           });
-          productCards.forEach((card) => productContainer.appendChild(card));
+
+          // Append product cards to the container
+          productCards.forEach((card, index) => {
+            productContainer.appendChild(card);
+
+            // Add event listener to the Add to Cart button
+            const addToCartButton = card.querySelector(".addToCart");
+            addToCartButton.addEventListener("click", () => {
+              const product = products[index]; // Get the corresponding product
+              addToCart(product.id, product.name, product.cost);
+            });
+          });
         })
         .catch((error) => {
           console.error("Error fetching products:", error);
         });
+
+      // Add to Cart function
+      function addToCart(productId, productName, productCost) {
+        let cstAlert = document.querySelector(".alert");
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const existingProduct = cart.find((item) => item.id === productId);
+        
+        if (existingProduct) {
+          existingProduct.quantity += 1;
+          existingProduct.cost = existingProduct.cost*existingProduct.quantity
+        } else {
+          cart.push({
+            id: productId,
+            name: productName,
+            cost: productCost,
+            quantity: 1,
+          });
+        }
+
+        // Save the updated cart back to local storage
+        localStorage.setItem("cart", JSON.stringify(cart));
+        cstAlert.style.display = 'flex'
+        
+        if(cart.length > 0){
+          cart.forEach(item => {
+            infoId.innerHTML += item.id + ", "
+          })
+        }
+      }
     </script>
   </body>
 </html>
