@@ -14,35 +14,105 @@
         <ul class="navigation">
           <li><a href="/src/products.html" class="nav-link">Products</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
-          <li><a href="#" class="nav-link">Saved</a></li>
           <li><a href="/index.html" class="nav-link">Home</a></li>
         </ul>
       </div>
       <div class="cart">
-        <h2>Cart</h2>
-        <ul id="cart-items"></ul>
-        <button id="clear-cart">Clear Cart</button>
+        <h1>Your Cart</h1>
+        <div class="product"></div>
+        <div class="cart-btns">
+          <button id="clear-cart">Clear Cart</button>
+          <button id="order">Order</button>
+        </div>
       </div>
     </div>
     <script>
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       let clearCart = document.querySelector("button");
+      let productContainer = document.querySelector(".product");
 
       if (cart.length > 0) {
-        cart.forEach((item) => {
-          console.log(
-            `Product: ${item.name}, Quantity: ${item.quantity}, Total Cost: $${
-              item.cost * item.quantity
-            }`
-          );
-          // You can now display this info in the HTML on the cart page
+        const products = cart;
+        const productCards = products.map((product, index) => {
+          let productCard = document.createElement("div");
+          productCard.classList.add("product-card");
+
+          productCard.innerHTML = `
+      <h3 class="product-name">${product.name}</h3>
+      <p class="product-id">ID: ${product.id}</p>
+      <p class="product-cost">Cost: $<span class="cost">${(
+        product.cost * product.quantity
+      ).toFixed(2)}</span></p>
+      <button class="remove_from_cart">Remove</button>
+      <div class="quantity">
+        <p>Quantity</p>
+        <button class="quantity_add">+</button>
+        <span class="quantity-value">${product.quantity}</span>
+        <button class="quantity_lessen">-</button>
+      </div>
+    `;
+
+          return productCard;
         });
-      } else {
-        console.log("Cart is empty");
+        productCards.forEach((card, index) => {
+          productContainer.appendChild(card);
+          const addButton = card.querySelector(".quantity_add");
+          const subtractButton = card.querySelector(".quantity_lessen");
+          const removeButton = card.querySelector(".remove_from_cart");
+          const quantityDisplay = card.querySelector(".quantity-value");
+          const costDisplay = card.querySelector(".cost");
+          addButton.addEventListener("click", () => {
+            if (cart[index].quantity < 9) {
+              cart[index].quantity += 1;
+              quantityDisplay.textContent = cart[index].quantity; // Update UI
+              costDisplay.textContent = (
+                cart[index].cost * cart[index].quantity
+              ).toFixed(2);
+              localStorage.setItem("cart", JSON.stringify(cart));
+              updateTotalCost();
+            }
+          });
+          subtractButton.addEventListener("click", () => {
+            if (cart[index].quantity > 1) {
+              cart[index].quantity -= 1;
+              quantityDisplay.textContent = cart[index].quantity; // Update UI
+              costDisplay.textContent = (
+                cart[index].cost * cart[index].quantity
+              ).toFixed(2);
+              localStorage.setItem("cart", JSON.stringify(cart));
+              updateTotalCost();
+            }
+          });
+          removeButton.addEventListener("click", () => {
+            cart.splice(index, 1);
+            card.remove();
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateTotalCost();
+          });
+        });
       }
+
+      function updateTotalCost() {
+        const totalCost = cart.reduce(
+          (total, product) => total + product.cost * product.quantity,
+          0
+        );
+        document.querySelector(
+          ".total-cost"
+        ).textContent = `Total: $${totalCost.toFixed(2)}`;
+      }
+
+      const totalCostElement = document.createElement("p");
+      totalCostElement.classList.add("total-cost");
+      totalCostElement.textContent = `Total: $${cart
+        .reduce((total, product) => total + product.cost * product.quantity, 0)
+        .toFixed(2)}`;
+      productContainer.appendChild(totalCostElement);
 
       clearCart.onclick = function () {
         localStorage.clear();
+        productContainer.innerHTML = "";
+        window.location.reload()
       };
     </script>
   </body>
